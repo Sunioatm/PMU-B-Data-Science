@@ -1,4 +1,3 @@
 numpy
 pandas
-scikit-learn
-nltk
+scikit-learn==1.2.2
