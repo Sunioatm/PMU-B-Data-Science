@@ -16,7 +16,10 @@ PORT = os.environ.get('PORT', 3000)
 
 @app.route("/", methods=['GET'])
 def hello_world():
-    return 'You can try this model by using this command directly in cmd or better ui with postman\n\n curl -X POST https://pmu-b-data-science-project.onrender.com/predict -H "Content-Type: application/json" -d "{\"text\":\"{TEXT HERE}\"}"\n\n Example\n curl -X POST https://pmu-b-data-science-project.onrender.com/predict -H "Content-Type: application/json" -d "{\"text\":\"hello I\'m feeling great today!\"}'
+    return ('You can try this model by using this command directly in cmd or better ui with postman:<br>'
+            'curl -X POST https://pmu-b-data-science-project.onrender.com/predict -H "Content-Type: application/json" -d "{\"text\":\"{TEXT HERE}\"}"<br>'
+            '<br>Example<br>'
+            'curl -X POST https://pmu-b-data-science-project.onrender.com/predict -H "Content-Type: application/json" -d "{\"text\":\"hello I\'m feeling great today!\"}"')
     
 
 @app.route('/predict', methods=['POST'])
