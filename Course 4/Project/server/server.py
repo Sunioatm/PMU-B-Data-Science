@@ -3,9 +3,21 @@ from flask_cors import CORS
 import subprocess
 import json
 import requests
+import os
+
+from dotenv import load_dotenv
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
+
+RAPIDAPI_KEY = os.environ.get('RAPIDAPI_KEY', 'default-key-if-not-set')
+PORT = os.environ.get('PORT', 3000)
+
+@app.route("/", methods=['GET'])
+def hello_world():
+    return 'You can try this model by using this command directly in cmd or better ui with postman\n\n curl -X POST https://pmu-b-data-science-project.onrender.com/predict -H "Content-Type: application/json" -d "{\"text\":\"{TEXT HERE}\"}"\n\n Example\n curl -X POST https://pmu-b-data-science-project.onrender.com/predict -H "Content-Type: application/json" -d "{\"text\":\"hello I\'m feeling great today!\"}'
+    
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -27,7 +39,7 @@ def predict():
                 'de': 'your-email@example.com'
             }
             headers = {
-                'X-RapidAPI-Key': '1126bf57b2mshd99a5d457783a9bp18a072jsn9f4a518e473d',
+                'X-RapidAPI-Key': RAPIDAPI_KEY,
                 'X-RapidAPI-Host': 'translated-mymemory---translation-memory.p.rapidapi.com'
             }
             response = requests.get('https://translated-mymemory---translation-memory.p.rapidapi.com/get', 
@@ -48,4 +60,4 @@ def predict():
         return jsonify({'message': 'Internal server error', 'error': str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=3000)
+    app.run(host='0.0.0.0', port=int(PORT))

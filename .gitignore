@@ -2,3 +2,5 @@ Mental-Health-Twitter.csv
 Suicide_Detection.csv
 Mental-Health-Twitter.rar
 Suicide_Detection.rar
+.env
+node_modules
