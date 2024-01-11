@@ -2,3 +2,6 @@ numpy
 pandas
 scikit-learn==1.2.2
 waitress
+flask
+flask-cors
+requests
