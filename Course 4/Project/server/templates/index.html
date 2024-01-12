@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <title>Predictive Model API</title>
+    </head>
+    <body>
+        <h1>Try the Prediction Model</h1>
+        <form id="predict-form">
+            <label for="text">Enter text for prediction:</label><br>
+            <textarea id="text" name="text" rows="4" cols="50"></textarea><br>
+            <input type="button" onclick="submitText()" value="Submit">
+        </form>
+        <p id="prediction-label">Enter the text...</p>
+        
+<script>
+function submitText() {
+    const predictionLabel = document.getElementById('prediction-label');
+    predictionLabel.innerText = 'Predicting...';  // Show predicting message
+
+    const text = document.getElementById('text').value;
+    fetch('/predict', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ text: text })
+    })
+    .then(response => response.json())
+    .then(data => {
+        predictionLabel.innerText = 'Prediction: ' + data.prediction;  // Show prediction result
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        predictionLabel.innerText = 'Error making prediction';
+    });
+}
+</script>            
+        Or you can try this model by using this command directly in cmd or better ui with postman:<br>
+        curl -X POST https://pmu-b-data-science-project.onrender.com/predict -H "Content-Type: application/json" -d "{\\\"text\\\":\\\"{YOUR TEXT HERE}\\\"}"<br>
+        
+        <br>Example<br>
+         curl -X POST https://pmu-b-data-science-project.onrender.com/predict -H "Content-Type: application/json" -d "{\\\"text\\\":\\\"hello I'm feeling great today!\\\"}"
+
+    </body>
+</html>
