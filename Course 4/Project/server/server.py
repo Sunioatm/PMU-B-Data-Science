@@ -14,19 +14,61 @@ CORS(app)
 RAPIDAPI_KEY = os.environ.get('RAPIDAPI_KEY', 'default-key-if-not-set')
 PORT = os.environ.get('PORT', 3000)
 
+# @app.route("/", methods=['GET'])
+# def hello_world():
+#     return ('You can try this model by using this command directly in cmd or better ui with postman:<br>'
+#             'curl -X POST https://pmu-b-data-science-project.onrender.com/predict -H "Content-Type: application/json" -d "{\"text\":\"{TEXT HERE}\"}"<br>'
+#             '<br>Example<br>'
+#             'curl -X POST https://pmu-b-data-science-project.onrender.com/predict -H "Content-Type: application/json" -d "{\"text\":\"hello I\'m feeling great today!\"}"')
+    
+
 @app.route("/", methods=['GET'])
 def hello_world():
-    return ('You can try this model by using this command directly in cmd or better ui with postman:<br>'
-            'curl -X POST https://pmu-b-data-science-project.onrender.com/predict -H "Content-Type: application/json" -d "{\"text\":\"{TEXT HERE}\"}"<br>'
-            '<br>Example<br>'
-            'curl -X POST https://pmu-b-data-science-project.onrender.com/predict -H "Content-Type: application/json" -d "{\"text\":\"hello I\'m feeling great today!\"}"')
-    
+    return '''
+    <html>
+        <head>
+            <title>Predictive Model API</title>
+        </head>
+        <body>
+            <h1>Try the Prediction Model</h1>
+            <form id="predict-form">
+                <label for="text">Enter text for prediction:</label><br>
+                <textarea id="text" name="text" rows="4" cols="50"></textarea><br>
+                <input type="button" onclick="submitText()" value="Submit">
+            </form>
+            <p id="prediction-label">Prediction will appear here...</p>
+            
+            <script>
+                function submitText() {
+                    const text = document.getElementById('text').value;
+                    fetch('/predict', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ text: text })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('prediction-label').innerText = 'Prediction: ' + data.prediction;
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+                }
+            </script>
+        </body>
+    </html>
+    '''
 
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        data = request.json
-        text = data.get('text')
+        if request.is_json:
+            data = request.get_json()
+            text = data.get('text')
+        else:
+            text = request.form.get('text')
         
         if not text:
             return jsonify({'message': 'No text provided for prediction.'}), 400
