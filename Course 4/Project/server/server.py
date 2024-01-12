@@ -36,7 +36,7 @@ def hello_world():
                 <textarea id="text" name="text" rows="4" cols="50"></textarea><br>
                 <input type="button" onclick="submitText()" value="Submit">
             </form>
-            <p id="prediction-label">Prediction will appear here...</p>
+            <p id="prediction-label">Enter the text...</p>
             
             <script>
                 function submitText() {
@@ -57,6 +57,13 @@ def hello_world():
                     });
                 }
             </script>
+            
+            Or you can try this model by using this command directly in cmd or better ui with postman:<br>
+            curl -X POST https://pmu-b-data-science-project.onrender.com/predict -H "Content-Type: application/json" -d "{\\\"text\\\":\\\"{YOUR TEXT HERE}\\\"}"<br>
+            
+            <br>Example<br>
+             curl -X POST https://pmu-b-data-science-project.onrender.com/predict -H "Content-Type: application/json" -d "{\\\"text\\\":\\\"hello I'm feeling great today!\\\"}"
+
         </body>
     </html>
     '''
