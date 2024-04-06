@@ -1,2 +1,3 @@
 # PMU-B-Data-Science
-Attended in PMU-B Data Science Project
+PMU-B Data Science Project suicidal prediction :
+https://pmu-b-data-science-project.onrender.com/
